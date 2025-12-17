@@ -1,18 +1,26 @@
 <?php
+// Avvio della sessione per gestire i dati tra le pagine
 session_start();
+
+// Controllo se sono stati inviati dati tramite POST
 if (!empty($_POST)) {
+    // Gestisce il redirect alla home page
     if (isset($_POST["home"]) && $_POST["home"] === "Home") {
         header("Location: ../index.php");
-    } else if (isset($_POST["invia"])) {
+    } // Gestisce il salvataggio dei dati del form nella sessione
+    else if (isset($_POST["invia"])) {
         if (isset($_POST["righe"]) && isset($_POST["colonne"]) && isset($_POST["contenuto"])) {
+            // Memorizza i valori del form nelle variabili di sessione
             $_SESSION["righe"] = $_POST["righe"];
             $_SESSION["colonne"] = $_POST["colonne"];
             $_SESSION["contenuto"] = $_POST["contenuto"];
         }
-    } else if (isset($_POST["destroy"])) {
+    } // Gestisce la distruzione della sessione corrente
+    else if (isset($_POST["destroy"])) {
         session_unset();
         session_destroy();
-    } else {
+    } // Redirect di fallback alla home
+    else {
         header("Location: ../index.php");
     }
 }
@@ -64,16 +72,19 @@ if (!empty($_POST)) {
 
 
 <?php
+// Verifica se esistono le variabili di sessione necessarie per generare la tabella
 if (!empty($_SESSION) && isset($_SESSION["righe"]) && isset($_SESSION["colonne"]) && isset($_SESSION["contenuto"])):
     $contatore = 0
     ?>
 
     <table>
         <?php
+        // Ciclo per generare le righe della tabella
         for ($i = 0; $i < $_SESSION["righe"]; $i++):
             ?>
             <tr>
                 <?php
+                // Ciclo per generare le colonne della tabella
                 for ($j = 0; $j < $_SESSION["colonne"]; $j++):
                     ?>
                     <td>

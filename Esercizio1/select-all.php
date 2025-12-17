@@ -1,16 +1,19 @@
 <?php
+// Includo la classe Database per la connessione al DB
 require_once "Database.php";
+// Ottengo l'istanza del DB e la connessione PDO
 $pdo = Database::getInstance()->getConnection();
 
+// Preparo e eseguo query per selezionare tutti i dipendenti
 $stmt = $pdo->prepare("SELECT * FROM dipendenti");
 $stmt->execute();
+// Recupero tutti i risultati in un array
 $dipendenti = $stmt->fetchAll();
 
-
+// Se non ci sono risultati, redirect alla pagina principale
 if (!$dipendenti) {
     header("Location: esercizio1.php");
 }
-
 
 ?>
 <!doctype html>
@@ -24,6 +27,7 @@ if (!$dipendenti) {
 </head>
 <body>
 <?php
+// Ciclo l'array dei dipendenti e stampo i dati di ognuno 
 foreach ($dipendenti as $dipendente) {
     ?>
 
@@ -39,4 +43,3 @@ foreach ($dipendenti as $dipendente) {
 
 </body>
 </html>
-
